@@ -1,0 +1,96 @@
+CQL PARA CREAR TABLAS
+
+CREATE KEYSPACE ecommerce
+WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 1};
+
+1)
+
+CREATE TABLE productos_por_usuario
+(id_usuario INT,
+id_producto INT,
+fecha TIMESTAMP,
+titulo TEXT,
+tags LIST<TEXT>,
+descripcion_prod TEXT,
+nombre TEXT,
+email TEXT,
+comentario TEXT,
+calificacion INT,
+PRIMARY KEY ((id_usuario), fecha, id_producto))
+WITH CLUSTERING ORDER BY (fecha DESC, id_producto DESC);
+
+
+2)
+
+CREATE TABLE usuarios_por_producto
+(id_producto INT,
+id_usuario INT,
+titulo TEXT,
+tags LIST<TEXT>,
+descripcion_prod TEXT,
+fecha TIMESTAMP,
+nombre TEXT,
+email TEXT,
+comentario TEXT,
+calificacion INT,
+PRIMARY KEY ((id_producto), fecha, id_usuario))
+WITH CLUSTERING ORDER BY (fecha DESC, id_usuario DESC);
+
+
+3)
+
+CREATE TABLE productos_calif_por_usuario
+(id_producto INT,
+id_usuario INT,
+fecha TIMESTAMP,
+calificacion INT,
+titulo TEXT,
+tags LIST<TEXT>,
+descripcion_prod TEXT,
+nombre TEXT,
+email TEXT,
+PRIMARY KEY ((id_usuario), fecha, calificacion, id_producto))
+WITH CLUSTERING ORDER BY (fecha DESC, calificacion DESC, id_producto DESC);
+
+
+4)
+
+CREATE TABLE usuarios_calif_por_producto
+(id_producto INT,
+id_usuario INT,
+fecha TIMESTAMP,
+calificacion INT,
+titulo TEXT,
+tags LIST<TEXT>,
+descripcion_prod TEXT,
+nombre TEXT,
+email TEXT,
+comentario TEXT,
+PRIMARY KEY ((id_producto), fecha, calificacion, id_usuario))
+WITH CLUSTERING ORDER BY (fecha DESC, calificacion DESC, id_usuario DESC);
+
+
+5)
+
+CREATE TABLE categoria_por_producto
+(id_producto INT,
+nombre_categoria TEXT,
+titulo TEXT,
+tags TEXT,
+descripcion_prod TEXT,
+fecha_creacion TIMESTAMP,
+descripcion_cat TEXT,
+PRIMARY KEY (id_producto));
+
+6)
+
+CREATE TABLE productos_por_categoria
+(id_producto INT,
+nombre_categoria TEXT,
+titulo TEXT,
+tags LIST<TEXT>,
+descripcion_prod TEXT,
+fecha_creacion TIMESTAMP,
+descripcion_cat TEXT,
+PRIMARY KEY ((nombre_categoria), titulo, id_producto))
+WITH CLUSTERING ORDER BY (titulo DESC, id_producto DESC);
